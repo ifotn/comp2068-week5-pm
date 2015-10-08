@@ -5,10 +5,24 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// add mongoose
+var mongoose = require('mongoose');
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var articles = require('./routes/articles');
 
 var app = express();
+
+// connect to mongodb with mongoose
+mongoose.connect('mongodb://localhost/comp2068-pm');
+
+// check connection
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Connection Error: '));
+db.once('open', function(callback) {
+  console.log('Connected to mongodb');
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/articles', articles);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
