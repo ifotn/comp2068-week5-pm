@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-// define the object schema
+// DEFINE THE OBJECT SCHEMA
 var articleSchema = new mongoose.Schema( {
     created: {
         type: Date,
